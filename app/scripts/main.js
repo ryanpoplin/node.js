@@ -64,6 +64,9 @@ function j () {
 }
 j();
 
+// The point of changing the 'this' ref. using .call/.apply?
+// Global namespace mitigation?
+
 function k () {
 	// 'this' === 'window' global object...
 	console.log(this, this.a);
@@ -86,5 +89,40 @@ function m (a, b, c) {
 	console.log(m);
 }
 m.call({z: 'zz'}, 'Ryan', 'Matthew', 'Poplin');
+
+// 'Function Arity' === number of args the function was declared with...
+
+var n = function (p, o, p, l, i, n, r) {};
+console.log(n.length, n.length === 7);
+
+// Closures...
+
+// It's not working...
+var o = 23;
+var byrdann = 'foxx';
+function poplinr () {
+	console.log(o === 23); // Supposed to be 'true'...
+	var o = 24;
+	console.log(o);
+	console.log(byrdann); // Supposed to be 'foxx'...
+	var byrdann = 'byrdann foxx'
+	function test () {
+		console.log(byrdann);
+		console.log(o === 24); // true...
+	}
+	test();
+}
+poplinr();
+// It's not working ends...
+
+var p = 23;
+(function(){
+	var p = 24;
+	console.log(p);
+})();
+console.log(p === 23); // true...
+
+
+
 
 
